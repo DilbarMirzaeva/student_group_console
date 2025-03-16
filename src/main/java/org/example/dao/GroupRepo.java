@@ -30,7 +30,7 @@ public class GroupRepo implements GroupDao {
     }
 
     @Override
-    public List<Group> displayAllGroups() {
+    public List<Group> displayAllGroups() throws DatabaseException{
         try (Connection connection = ConnectionHelper.getConnection()) {
             String query = "SELECT * FROM groups";
             PreparedStatement ps = connection.prepareStatement(query);

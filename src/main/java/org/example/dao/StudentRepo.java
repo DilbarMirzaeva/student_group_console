@@ -2,7 +2,8 @@ package org.example.dao;
 
 import org.example.config.ConnectionHelper;
 import org.example.entity.Student;
-import org.example.exception.DatabasaExveption;
+import org.example.exception.DatabaseException;
+import org.example.exception.EntityNotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class StudentRepo implements StudentDao {
     }
 
     @Override
-    public List<Student> displayAllStudents() {
+    public List<Student> displayAllStudents() throws DatabaseException {
         try (Connection connection = ConnectionHelper.getConnection()) {
             String query = "SELECT * FROM student";
             PreparedStatement ps = connection.prepareStatement(query);
@@ -43,7 +44,7 @@ public class StudentRepo implements StudentDao {
                 students.add(new Student(id, name,email,group_id));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("Database error occurred");
         }
         return students;
     }
@@ -60,7 +61,7 @@ public class StudentRepo implements StudentDao {
 
             int rowsFind = ps.executeUpdate();
             if (rowsFind == 0) {
-                throw new DatabasaExveption("Student not found with id=" + id);
+                throw new EntityNotFoundException("Student not found with id=" + id);
             }
 
             System.out.println("Student with id=" + id + " updated");
@@ -77,7 +78,7 @@ public class StudentRepo implements StudentDao {
             ps.setInt(1, id);
             int rowsDelete = ps.executeUpdate();
             if (rowsDelete == 0) {
-                throw new DatabasaExveption("Student not found with id=" + id);
+                throw new EntityNotFoundException("Student not found with id=" + id);
             }
             System.out.println("Student with id="+id+" deleted");
         } catch (SQLException e) {
