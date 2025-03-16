@@ -30,7 +30,7 @@ public class GroupRepo implements GroupDao {
     }
 
     @Override
-    public List<Group> displayAllGroups() throws DatabaseException{
+    public List<Group> displayAllGroups() throws DatabaseException {
         try (Connection connection = ConnectionHelper.getConnection()) {
             String query = "SELECT * FROM groups";
             PreparedStatement ps = connection.prepareStatement(query);
@@ -78,7 +78,7 @@ public class GroupRepo implements GroupDao {
             if (rowsDelete == 0) {
                 throw new EntityNotFoundException("Group not found with id=" + id);
             }
-            System.out.println("Group with id="+id+" deleted");
+            System.out.println("Group with id=" + id + " deleted");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

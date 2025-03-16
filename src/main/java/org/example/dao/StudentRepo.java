@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepo implements StudentDao {
-    List<Student> students=new ArrayList<>();
+    List<Student> students = new ArrayList<>();
+
     @Override
     public void createStudents(Student student) {
         try (Connection connection = ConnectionHelper.getConnection()) {
@@ -41,7 +42,7 @@ public class StudentRepo implements StudentDao {
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 Integer group_id = resultSet.getInt("group_id");
-                students.add(new Student(id, name,email,group_id));
+                students.add(new Student(id, name, email, group_id));
             }
         } catch (SQLException e) {
             throw new DatabaseException("Database error occurred");
@@ -80,7 +81,7 @@ public class StudentRepo implements StudentDao {
             if (rowsDelete == 0) {
                 throw new EntityNotFoundException("Student not found with id=" + id);
             }
-            System.out.println("Student with id="+id+" deleted");
+            System.out.println("Student with id=" + id + " deleted");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
