@@ -13,6 +13,12 @@ public class Student {
         this.group_id = group_id;
     }
 
+    public Student(String name, String email, Integer group_id) {
+        this.name = name;
+        this.email = email;
+        this.group_id = group_id;
+    }
+
     public int getId() {
         return id;
     }
