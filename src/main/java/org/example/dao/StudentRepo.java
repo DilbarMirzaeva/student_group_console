@@ -1,9 +1,8 @@
 package org.example.dao;
 
 import org.example.config.ConnectionHelper;
-import org.example.entity.Group;
 import org.example.entity.Student;
-import org.example.exception.EntityNotFoundException;
+import org.example.exception.DatabasaExveption;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,7 +60,7 @@ public class StudentRepo implements StudentDao {
 
             int rowsFind = ps.executeUpdate();
             if (rowsFind == 0) {
-                throw new EntityNotFoundException("Student not found with id=" + id);
+                throw new DatabasaExveption("Student not found with id=" + id);
             }
 
             System.out.println("Student with id=" + id + " updated");
@@ -78,7 +77,7 @@ public class StudentRepo implements StudentDao {
             ps.setInt(1, id);
             int rowsDelete = ps.executeUpdate();
             if (rowsDelete == 0) {
-                throw new EntityNotFoundException("Student not found with id=" + id);
+                throw new DatabasaExveption("Student not found with id=" + id);
             }
             System.out.println("Student with id="+id+" deleted");
         } catch (SQLException e) {

@@ -2,9 +2,9 @@ package org.example.dao;
 
 import org.example.config.ConnectionHelper;
 import org.example.entity.Group;
+import org.example.exception.DatabaseException;
 import org.example.exception.EntityNotFoundException;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,7 +43,7 @@ public class GroupRepo implements GroupDao {
                 groups.add(new Group(id, name, description));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DatabaseException("Database error occurred");
         }
         return groups;
     }
