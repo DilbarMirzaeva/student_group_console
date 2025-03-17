@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.example.dto.StudentGroupDTO;
 import org.example.entity.Group;
 import org.example.entity.Student;
 
@@ -14,4 +15,6 @@ public interface StudentDao {
     void updateStudent(int id, Student student);
 
     void deleteStudent(int id);
+
+    List<StudentGroupDTO> getStudentsWithGroup();
 }

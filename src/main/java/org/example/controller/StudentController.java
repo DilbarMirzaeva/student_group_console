@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.StudentGroupDTO;
 import org.example.entity.Student;
 import org.example.service.StudentService;
 
@@ -40,5 +41,10 @@ public class StudentController {
         String email=getInput("Enter the student email: ",String.class);
         int group_id=getInput("Enter the student group id: ",Integer.class);
         return new Student(name,email,group_id);
+    }
+    
+    public void showStudentGroups() {
+        List<StudentGroupDTO> studentGroupDTOS=studentService.getStudentsWithGroups();
+        studentGroupDTOS.forEach(System.out::println);
     }
 }

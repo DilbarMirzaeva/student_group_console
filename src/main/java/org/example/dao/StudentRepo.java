@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.config.ConnectionHelper;
+import org.example.dto.StudentGroupDTO;
 import org.example.entity.Student;
 import org.example.exception.DatabaseException;
 import org.example.exception.EntityNotFoundException;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class StudentRepo implements StudentDao {
     List<Student> students = new ArrayList<>();
+    List<StudentGroupDTO> studentGroupDTOs = new ArrayList<>();
 
     @Override
     public void createStudents(Student student) {
@@ -85,5 +87,26 @@ public class StudentRepo implements StudentDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<StudentGroupDTO> getStudentsWithGroup() throws DatabaseException{
+        try(Connection connection=ConnectionHelper.getConnection()) {
+            String query="SELECT s.id,s.name,s.email,g.name FROM student s  JOIN groups g on s.group_id=g.id";
+            PreparedStatement ps=connection.prepareStatement(query);
+
+            ResultSet resultSet=ps.executeQuery();
+            while (resultSet.next()) {
+                int id=resultSet.getInt("id");
+                String name=resultSet.getString("name");
+                String email=resultSet.getString("email");
+                String group_name=resultSet.getString("group_name");
+
+                studentGroupDTOs.add(new StudentGroupDTO(id,name,email,group_name));
+            }
+        } catch (SQLException e) {
+            throw  new DatabaseException("Database error occurred");
+        }
+
+        return studentGroupDTOs;
     }
 }

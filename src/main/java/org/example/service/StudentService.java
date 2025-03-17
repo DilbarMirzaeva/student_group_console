@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.dao.StudentDao;
+import org.example.dto.StudentGroupDTO;
 import org.example.entity.Student;
 
 import java.util.List;
@@ -26,5 +27,9 @@ public class StudentService {
 
     public void deleteStudent(int id) {
         studentDao.deleteStudent(id);
+    }
+
+    public List<StudentGroupDTO> getStudentsWithGroups() {
+        return studentDao.getStudentsWithGroup();
     }
 }
