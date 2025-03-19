@@ -20,8 +20,9 @@ public class StudentController {
         studentService.insertStudent(student);
     }
 
-    public List<Student> getStudents() {
-        return studentService.displayAllStudents();
+    public void getStudents() {
+        List<Student> students= studentService.displayAllStudents();
+        students.forEach(System.out::println);
     }
 
     public void updateStudent() {
@@ -43,8 +44,7 @@ public class StudentController {
         return new Student(name,email,group_id);
     }
     
-    public void showStudentGroups() {
-        List<StudentGroupDTO> studentGroupDTOS=studentService.getStudentsWithGroups();
-        studentGroupDTOS.forEach(System.out::println);
+    public List<StudentGroupDTO> showStudentGroups() {
+        return studentService.getStudentsWithGroups();
     }
 }

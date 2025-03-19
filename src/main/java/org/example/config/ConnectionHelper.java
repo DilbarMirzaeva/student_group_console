@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionHelper {
     public static Connection getConnection() throws SQLException {
-        String url="jdb:postgresql://localhost:5432/postgres";
+        String url="jdbc:postgresql://localhost:5432/school";
         String username="postgres";
         String password="Dlbarmirze5678.";
         return DriverManager.getConnection(url,username,password);

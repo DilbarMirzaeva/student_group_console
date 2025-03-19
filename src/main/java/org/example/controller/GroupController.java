@@ -19,8 +19,9 @@ public class GroupController {
         groupService.createGroup(group);
     }
 
-    public List<Group> displayGroups() {
-       return groupService.displayGroups();
+    public void displayGroups() {
+       List<Group> groups= groupService.displayGroups();
+       groups.forEach(System.out::println);
     }
 
     public void updateGroup() {

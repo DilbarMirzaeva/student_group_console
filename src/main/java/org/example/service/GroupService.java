@@ -17,9 +17,9 @@ public class GroupService {
         System.out.println("Group created successfully");
     }
 
-    public List<Group> displayGroups(){
-        return groupDao.displayAllGroups();
-    }
+        public List<Group> displayGroups(){
+            return groupDao.displayAllGroups();
+        }
 
     public void updateGroup(int id,Group group) {
         groupDao.updateGroup(id,group);

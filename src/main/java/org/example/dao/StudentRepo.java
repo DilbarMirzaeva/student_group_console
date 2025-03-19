@@ -14,12 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepo implements StudentDao {
-    List<Student> students = new ArrayList<>();
-    List<StudentGroupDTO> studentGroupDTOs = new ArrayList<>();
+
 
     @Override
     public void createStudents(Student student) {
         try (Connection connection = ConnectionHelper.getConnection()) {
+            String checkQuery="SELECT * FROM groups WHERE id=?";
+            PreparedStatement psCheck=connection.prepareStatement(checkQuery);
+            psCheck.setInt(1,student.getGroup_id());
+            ResultSet rsCheck=psCheck.executeQuery();
+            if (!rsCheck.next()) {
+                System.out.println("Error: Group ID " + student.getGroup_id() + " does not exist!");
+                return;
+            }
+
             String query = "INSERT INTO student(name,email,group_id) VALUES (?,?,?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, student.getName());
@@ -34,6 +42,7 @@ public class StudentRepo implements StudentDao {
 
     @Override
     public List<Student> displayAllStudents() throws DatabaseException {
+        List<Student> students = new ArrayList<>();
         try (Connection connection = ConnectionHelper.getConnection()) {
             String query = "SELECT * FROM student";
             PreparedStatement ps = connection.prepareStatement(query);
@@ -47,7 +56,7 @@ public class StudentRepo implements StudentDao {
                 students.add(new Student(id, name, email, group_id));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Database error occurred");
+            throw new DatabaseException("Database error occurred"+e.getMessage());
         }
         return students;
     }
@@ -60,7 +69,7 @@ public class StudentRepo implements StudentDao {
             ps.setString(1, student.getName());
             ps.setString(2, student.getEmail());
             ps.setInt(3, student.getGroup_id());
-            ps.setInt(3, id);
+            ps.setInt(4, id);
 
             int rowsFind = ps.executeUpdate();
             if (rowsFind == 0) {
@@ -90,8 +99,10 @@ public class StudentRepo implements StudentDao {
     }
 
     public List<StudentGroupDTO> getStudentsWithGroup() throws DatabaseException{
+        List<StudentGroupDTO> studentGroupDTOs = new ArrayList<>();
         try(Connection connection=ConnectionHelper.getConnection()) {
-            String query="SELECT s.id,s.name,s.email,g.name FROM student s  JOIN groups g on s.group_id=g.id";
+            String query="SELECT s.id,s.name,s.email,g.name AS group_name " +
+                    "FROM student s  JOIN groups g on s.group_id=g.id";
             PreparedStatement ps=connection.prepareStatement(query);
 
             ResultSet resultSet=ps.executeQuery();
@@ -104,7 +115,7 @@ public class StudentRepo implements StudentDao {
                 studentGroupDTOs.add(new StudentGroupDTO(id,name,email,group_name));
             }
         } catch (SQLException e) {
-            throw  new DatabaseException("Database error occurred");
+            throw  new DatabaseException("Database error occurred"+e.getMessage());
         }
 
         return studentGroupDTOs;
