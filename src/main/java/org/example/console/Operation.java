@@ -53,9 +53,9 @@ public class Operation {
                     break;
                 case 2:
                     System.out.println("---------------");
-                    try{
+                    try {
                         groupController.displayGroups();
-                    }catch (DatabaseException e){
+                    } catch (DatabaseException e) {
                         System.out.println(e.getMessage());
                     }
                     System.out.println("---------------");
@@ -67,12 +67,11 @@ public class Operation {
                     break;
                 case 4:
                     System.out.println("---------------");
-                    try{
+                    try {
                         groupController.deleteGroup();
-                    }catch (EntityNotFoundException e){
+                    } catch (EntityNotFoundException e) {
                         System.out.println(e.getMessage());
                     }
-
                     System.out.println("---------------");
                     break;
                 case 5:
@@ -92,7 +91,11 @@ public class Operation {
                     break;
                 case 8:
                     System.out.println("---------------");
-                    studentController.deleteStudent();
+                    try {
+                        studentController.deleteStudent();
+                    } catch (EntityNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("---------------");
                     break;
                 case 9:
