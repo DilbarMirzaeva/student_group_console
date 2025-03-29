@@ -62,7 +62,11 @@ public class Operation {
                     break;
                 case 3:
                     System.out.println("---------------");
-                    groupController.updateGroup();
+                    try {
+                        groupController.updateGroup();
+                    } catch (EntityNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("---------------");
                     break;
                 case 4:
@@ -81,12 +85,20 @@ public class Operation {
                     break;
                 case 6:
                     System.out.println("---------------");
-                    studentController.getStudents();
+                    try {
+                        studentController.getStudents();
+                    } catch (DatabaseException e) {
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("---------------");
                     break;
                 case 7:
                     System.out.println("---------------");
-                    studentController.updateStudent();
+                    try{
+                        studentController.updateStudent();
+                    }catch (EntityNotFoundException e){
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("---------------");
                     break;
                 case 8:
@@ -100,7 +112,11 @@ public class Operation {
                     break;
                 case 9:
                     System.out.println("---------------");
-                    System.out.println(findStudentGroup());
+                    try {
+                        System.out.println(findStudentGroup());
+                    }catch (DatabaseException e){
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("---------------");
                     break;
                 case 10:
