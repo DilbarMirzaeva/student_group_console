@@ -94,7 +94,7 @@ public class StudentRepo implements StudentDao {
             }
             System.out.println("Student with id=" + id + " deleted");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 

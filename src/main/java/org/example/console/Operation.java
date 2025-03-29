@@ -7,6 +7,8 @@ import org.example.dao.GroupRepo;
 import org.example.dao.StudentDao;
 import org.example.dao.StudentRepo;
 import org.example.dto.StudentGroupDTO;
+import org.example.exception.DatabaseException;
+import org.example.exception.EntityNotFoundException;
 import org.example.service.GroupService;
 import org.example.service.StudentService;
 
@@ -51,7 +53,11 @@ public class Operation {
                     break;
                 case 2:
                     System.out.println("---------------");
-                    groupController.displayGroups();
+                    try{
+                        groupController.displayGroups();
+                    }catch (DatabaseException e){
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("---------------");
                     break;
                 case 3:
@@ -61,7 +67,12 @@ public class Operation {
                     break;
                 case 4:
                     System.out.println("---------------");
-                    groupController.deleteGroup();
+                    try{
+                        groupController.deleteGroup();
+                    }catch (EntityNotFoundException e){
+                        System.out.println(e.getMessage());
+                    }
+
                     System.out.println("---------------");
                     break;
                 case 5:

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupRepo implements GroupDao {
-    List<Group> groups = new ArrayList<>();
+
 
     @Override
     public void createGroup(Group group) {
@@ -31,6 +31,7 @@ public class GroupRepo implements GroupDao {
 
     @Override
     public List<Group> displayAllGroups() throws DatabaseException {
+        List<Group> groups = new ArrayList<>();
         try (Connection connection = ConnectionHelper.getConnection()) {
             String query = "SELECT * FROM groups";
             PreparedStatement ps = connection.prepareStatement(query);
@@ -80,7 +81,7 @@ public class GroupRepo implements GroupDao {
             }
             System.out.println("Group with id=" + id + " deleted");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 }
